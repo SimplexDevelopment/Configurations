@@ -3,8 +3,6 @@ package io.github.simplexdev.configurations;
 import io.github.simplexdev.configurations.api.INode;
 import io.github.simplexdev.configurations.api.ISection;
 
-import java.math.BigInteger;
-
 public class ConfigFactory {
     public ISection createNewSection(String name) {
         ISection section = new Section(name);
@@ -32,7 +30,7 @@ public class ConfigFactory {
         return new Node<>(name, value);
     }
 
-    public INode<BigInteger> bigIntegerNode(String name, BigInteger value) {
+    public INode<Double> doubleNode(String name, Double value) {
         return new Node<>(name, value);
     }
 }

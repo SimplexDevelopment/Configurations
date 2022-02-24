@@ -1,6 +1,6 @@
 package io.github.simplexdev.configurations.api;
 
-public interface INode<T> extends Serializable<INode<T>> {
+public interface INode<T> extends Serializable<INode> {
     /**
      * @return The name of the configuration entry.
      */

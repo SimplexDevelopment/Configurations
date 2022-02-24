@@ -1,8 +1,12 @@
 package io.github.simplexdev.configurations;
 
-public final class Utils {
-    Utils() {}
+import org.jetbrains.annotations.Contract;
 
+public final class Utils {
+    public Utils() {
+    }
+
+    @Contract(pure = true)
     public boolean checkForInt(String input) {
         try {
             Integer.parseInt(input);
@@ -12,31 +16,41 @@ public final class Utils {
         }
     }
 
+    @Contract(pure = true)
     public boolean checkForFloat(String input) {
-        if (!input.endsWith("F")) {
+        if (!input.endsWith("f") || !input.endsWith("F")) {
             return false;
         }
 
         try {
-            Float.parseFloat(input.split("F")[0]);
+            Float.parseFloat(input);
             return true;
         } catch (NumberFormatException ignored) {
             return false;
         }
     }
 
+    @Contract(pure = true)
     public boolean checkForBoolean(String input) {
-        if (input.equalsIgnoreCase("true")) {
-            return true;
-        }
-        return input.equalsIgnoreCase("false");
+        return input.equalsIgnoreCase("true");
     }
 
+    @Contract(pure = true)
     public boolean checkForLong(String input) {
         if (!input.endsWith("L")) return false;
 
         try {
-            Long.parseLong(input.split("L")[0]);
+            Long.parseLong(input);
+            return true;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+    }
+
+    @Contract(pure = true)
+    public boolean checkForDouble(String value) {
+        try {
+            Double.parseDouble(value);
             return true;
         } catch (NumberFormatException ignored) {
             return false;

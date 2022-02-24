@@ -7,7 +7,7 @@ public class Node<T> implements INode<T> {
     private final T value;
 
     /**
-     * @param name The name of the entry.
+     * @param name  The name of the entry.
      * @param value The value of the entry
      */
     public Node(String name, T value) {
@@ -36,9 +36,19 @@ public class Node<T> implements INode<T> {
         return (getName() + ": " + getValue().toString());
     }
 
-    // Not sure how to deserialize here.
+    // I think this might work
     @Override
-    public INode<T> deserialize(String serializedInput) {
-        return null;
+    public INode deserialize(String serializedInput) {
+        String[] split = serializedInput.split(":\t");
+        String name = split[0].trim();
+        String value = split[1].trim();
+        Utils utils = new Utils();
+
+        if (utils.checkForBoolean(value)) return new Node<>(name, Boolean.parseBoolean(value));
+        if (utils.checkForFloat(value)) return new Node<>(name, Float.parseFloat(value));
+        if (utils.checkForInt(value)) return new Node<>(name, Integer.parseInt(value));
+        if (utils.checkForLong(value)) return new Node<>(name, Long.parseLong(value));
+        if (utils.checkForDouble(value)) return new Node<>(name, Double.parseDouble(value));
+        return new Node<>(name, value);
     }
 }

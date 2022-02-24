@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Section implements ISection {
+    private static final List<Node<?>> ungroupedNodes = new ArrayList<>();
     private final String name;
     private final List<IGroup> groupList;
-    private static final List<Node<?>> ungroupedNodes = new ArrayList<>();
 
     public Section(String name) {
         this.name = name;

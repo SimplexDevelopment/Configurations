@@ -1,11 +1,11 @@
-package io.github.simplexdev.configurations;
+package io.github.simplexdev.configurations.api;
 
-import io.github.simplexdev.configurations.api.IGroup;
-import io.github.simplexdev.configurations.api.INode;
-import io.github.simplexdev.configurations.api.ISection;
+import io.github.simplexdev.configurations.Configurations;
+import io.github.simplexdev.configurations.Utils;
 import org.bukkit.plugin.Plugin;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,28 +26,17 @@ public abstract class Yaml {
 
         File dataFolder = plugin.getDataFolder();
         if (!dataFolder.exists()) dataFolder.mkdir();
+
         this.dataFolder = dataFolder;
         File file = new File(dataFolder, fileName);
-        if (copyResource) {
-            try {
-                file.createNewFile();
-                InputStream inputStream = plugin.getResource(fileName);
-                FileOutputStream outputStream = new FileOutputStream(file);
-                byte[] buffer = inputStream.readAllBytes();
-                outputStream.write(buffer);
-                outputStream.flush();
-                outputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         try {
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (copyResource) {
+            plugin.saveResource(fileName, true);
         }
         this.configFile = file;
     }
