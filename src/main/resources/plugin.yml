@@ -1,0 +1,6 @@
+name: Configurations
+version: '${version}'
+main: io.github.simplexdev.configurations.Configurations
+api-version: 1.18
+authors: [ SimplexDevelopment ]
+description: A better config api for paper
