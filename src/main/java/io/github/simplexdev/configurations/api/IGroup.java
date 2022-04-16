@@ -4,8 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.List;
 
-public interface IGroup extends Serializable<IGroup> {
+public interface IGroup extends Serialize<IGroup> {
     IGroup createNestedGroup(IGroup group, String name, INode<?>... nodes);
 
     String getName();
@@ -19,6 +20,12 @@ public interface IGroup extends Serializable<IGroup> {
     @Nullable
     IGroup getParentGroup();
 
+    @Nullable IGroup getNestedGroup(String name);
+
+    boolean hasNest();
+
+    List<IGroup> getNest();
+
     /**
      * Gets the parent section associated to this group.
      * Groups cannot exist outside a parent section.
@@ -27,7 +34,7 @@ public interface IGroup extends Serializable<IGroup> {
      * @return The parent section of this group.
      */
     @NotNull
-    ISection getSection();
+    ISection getParentSection();
 
     /**
      * @return The nodes contained within this group.

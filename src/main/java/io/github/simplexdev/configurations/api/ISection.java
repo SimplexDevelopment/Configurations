@@ -4,7 +4,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface ISection extends Serializable<ISection> {
+import java.io.Serializable;
+
+public interface ISection extends Serializable, Serialize<ISection> {
     @NotNull
     String getName();
 
@@ -16,4 +18,8 @@ public interface ISection extends Serializable<ISection> {
 
     @Nullable
     IGroup getGroup(String name);
+
+    String indent(int level);
+
+    String newLine();
 }

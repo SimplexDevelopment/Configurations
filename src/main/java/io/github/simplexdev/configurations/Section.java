@@ -50,6 +50,12 @@ public class Section implements ISection {
         for (IGroup group : groupList) {
             if (group.getName().equalsIgnoreCase(name)) {
                 return group;
+            } else if (group.hasNest()) {
+                for (IGroup nested : group.getNest()) {
+                    if (nested.getName().equalsIgnoreCase(name)) {
+                        return nested;
+                    }
+                }
             }
         }
         return null;
@@ -61,7 +67,7 @@ public class Section implements ISection {
 
     @Override
     public String serialize() {
-        return getName();
+        return getName() + ": " + newLine();
     }
 
     @Override
@@ -72,5 +78,21 @@ public class Section implements ISection {
             }
         }
         return null;
+    }
+
+    @Override
+    public String indent(int level) {
+        StringBuilder sb = new StringBuilder();
+        int x = 0;
+        while (x < level) {
+            sb.append("\\ ");
+            x++;
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String newLine() {
+        return "\n";
     }
 }

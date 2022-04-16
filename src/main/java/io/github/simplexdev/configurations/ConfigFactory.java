@@ -4,8 +4,8 @@ import io.github.simplexdev.configurations.api.INode;
 import io.github.simplexdev.configurations.api.ISection;
 
 public class ConfigFactory {
-    public ISection createNewSection(String name) {
-        ISection section = new Section(name);
+    public Section createNewSection(String name) {
+        Section section = new Section(name);
         Configurations.availableSections.add(section);
         return section;
     }

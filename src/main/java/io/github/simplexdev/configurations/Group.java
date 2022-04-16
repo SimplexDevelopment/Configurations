@@ -45,7 +45,7 @@ public class Group implements IGroup {
      * @param name  The name of this group.
      */
     public Group(@NotNull IGroup group, @NotNull String name) {
-        this.section = group.getSection();
+        this.section = group.getParentSection();
         this.group = group;
         this.name = name;
     }
@@ -103,6 +103,7 @@ public class Group implements IGroup {
      * @param name The name of the nested group
      * @return The nested group.
      */
+    @Override
     public @Nullable IGroup getNestedGroup(String name) {
         for (IGroup nested : nestedGroups) {
             if (nested.getName().equalsIgnoreCase(name)) {
@@ -112,6 +113,16 @@ public class Group implements IGroup {
         return null;
     }
 
+    @Override
+    public boolean hasNest() {
+        return nestedGroups.isEmpty();
+    }
+
+    @Override
+    public List<IGroup> getNest() {
+        return nestedGroups;
+    }
+
     /**
      * Gets the parent section associated with this group.
      * This will get the parent section regardless of nesting because sections are singular.
@@ -119,7 +130,7 @@ public class Group implements IGroup {
      * @return The parent section of this group.
      */
     @Override
-    public @NotNull ISection getSection() {
+    public @NotNull ISection getParentSection() {
         return section;
     }
 
@@ -154,11 +165,23 @@ public class Group implements IGroup {
 
     @Override
     public String serialize() {
-        return getName();
+        // Will indent the group in relation to the amount of parent groups there are.
+        if (getParentGroup() != null) {
+            int x = 0; // Origin
+            IGroup parent = getParentGroup();
+            while (parent.getParentGroup() != null) {
+                parent = parent.getParentGroup();
+                x++;
+            }
+            x += 1; // Consider parent section as 0
+            x *= 2; // Double indent
+            return getParentSection().indent(x) + getName() + ": ";
+        }
+        return getParentSection().indent(2) + getName() + ": "; // Parent section has no indentation and this is not a nested group.
     }
 
     @Override
     public IGroup deserialize(String serializedInput) {
-        return getSection().getGroup(serializedInput);
+        return getParentSection().getGroup(serializedInput);
     }
 }

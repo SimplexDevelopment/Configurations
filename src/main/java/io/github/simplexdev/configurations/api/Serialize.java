@@ -1,6 +1,6 @@
 package io.github.simplexdev.configurations.api;
 
-public interface Serializable<T> {
+public interface Serialize<T> {
     String serialize();
 
     T deserialize(String serializedInput);
